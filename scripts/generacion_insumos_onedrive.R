@@ -55,7 +55,7 @@ base_cruda %>%
 # Exportaciones netas por provincia
 
 base_cruda %>% 
-  group_by(anio,codigo_provincia,gsectores) %>% 
+  group_by(anio,codigo_provincia,provincia,gsectores) %>% 
   summarise(exportaciones_netas = sum(exportaciones_netas,na.rm = T)) %>% 
   pin_write(board = carpeta,
       x = .,
@@ -66,7 +66,7 @@ base_cruda %>%
 # Empleo provisto por provincia 
 
 base_cruda %>% 
-  group_by(anio,codigo_provincia,gsectores) %>%
+  group_by(anio,codigo_provincia,provincia,gsectores) %>%
   summarise(plazas_totales = sum(plazas,na.rm = T)) %>% 
   pin_write(board = carpeta,
       x = .,
@@ -77,7 +77,7 @@ base_cruda %>%
 # Ventas por provincia
 
 base_cruda %>% 
-  group_by(anio,codigo_provincia,gsectores) %>%
+  group_by(anio,codigo_provincia,provincia,gsectores) %>%
   summarise(ventas_totales = sum(ventas_totales,na.rm = T)) %>% 
   pin_write(board = carpeta,
             x = .,
@@ -116,5 +116,30 @@ provincia_plazas <- base_cruda %>%
       versioned = T)
 
 
+# Otra funcioncita mas ----------------------------------------------------
 
+generar_mapa <- function(tabla_plazas,
+                         anio_mapa,
+                         tipo_mapa,
+                         mapa){
+  
+  tabla_plazas %>%
+    filter(anio == anio_mapa,
+           unidad_legal_tipo == tipo_mapa) %>% 
+    right_join(mapa,
+               c("codigo_provincia" = "DPA_PROVIN")) %>%
+    ggplot() +
+    geom_polygon(aes(x = long,
+                     y = lat,
+                     group = group,
+                     fill = plazas_totales)) +
+    theme_minimal()
+}
+
+
+pin_write(x = generar_mapa,
+          board = carpeta,
+          name = "function_generar_mapa",
+          description = "Función para mapas coropleticos",
+          versioned = T)
   
