@@ -66,6 +66,10 @@ add_flag <- function(gt_table){
       })
 }
 
+#Viste previa:
+
+
+
 # Guardar insumos en {pins} ----------------------------------------------
 
 # Tabla:
@@ -81,5 +85,42 @@ banderas %>%
 pin_write(board = carpeta,
           x = add_flag,
           name = "function_add_flag")
+
+
+
+# Modificaciones ----------------------------------------------------------
+
+# Galapagos no tenia capital lo trataremos de forma aislada
+aislado <- banderas %>% 
+  filter(str_detect(nombre,"Galáp"))
+
+# Uso de pivot wider para las columnas de prov y capital
+banderas <- banderas %>% 
+  anti_join(aislado) %>% 
+  mutate(indicador = rep(c("provincia","capital"),23)) %>% 
+  pivot_wider(names_from = indicador,values_from = c("nombre","url")) %>% 
+  unnest() 
+
+# Algunos arreglos coquetos:
+banderas <- banderas %>% 
+  select(url = url_provincia,matches("nombre")) %>% 
+  mutate(across(matches("nombre"),~str_remove_all(.x,"Bandera de "))) %>% 
+  mutate(across(matches("nombre"),~str_remove_all(.x," \\(Ecua.*"))) %>% 
+  rename_with(.cols = matches("nombre"),~str_remove(.x,"nombre_"))
+
+# Ajustando a Galápagos:
+aislado <- aislado %>% 
+  rename(provincia = nombre)
+
+
+# Reescribimos el pin -----------------------------------------------------
+
+banderas %>% 
+  bind_rows(aislado) %>% 
+  pin_write(board = carpeta,
+            name = "insumos_banderas",
+            x = .,
+            versioned = T,
+            description = "Colocamos las provincias y capitales en distintas columnas")
 
 
