@@ -4,7 +4,14 @@
 
 ## Agenda
 
-puntos del taller
+* Caso de estudio: Un vistazo al desempeño empresarial ecuatoriano
+* ¿Por qué usar la librería {pins}?
+* Instalación y preparación del ambiente de trabajo
+* Datos, metadatos y más metadatos
+* Referencias y documentación
+* Agradecimientos
 
 
 ## Resumen 
+
+El taller contempla el uso de las librerias pins, tidyverse, gt, rvest disponibles en el software de programaci+on RStudio, en el análisis de los sectores económicos de las empresas en Ecuador, considerando la base de datos del Directorio de Empresas del Instituto Nacional de Estadísticas y Censos (INEC).
