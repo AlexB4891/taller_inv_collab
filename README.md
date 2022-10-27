@@ -14,4 +14,4 @@
 
 ## Resumen 
 
-El taller contempla el uso de las librerias pins, tidyverse, gt, rvest disponibles en el software de programaci+on RStudio, en el análisis de los sectores económicos de las empresas en Ecuador, considerando la base de datos del Directorio de Empresas del Instituto Nacional de Estadísticas y Censos (INEC).
+El taller contempla el uso de las librerías pins, tidyverse, gt y rvest disponibles en el software de programación RStudio, en el análisis de los sectores económicos de las empresas en Ecuador, considerando la base de datos del Directorio de Empresas del Instituto Nacional de Estadísticas y Censos (INEC).
